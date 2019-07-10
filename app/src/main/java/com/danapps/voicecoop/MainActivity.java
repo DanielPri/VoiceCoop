@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +44,15 @@ public class MainActivity extends AppCompatActivity {
 
         gridview = findViewById(R.id.grid_view);
         gridview.setAdapter(new numberAdapter(COOP_QUANTITY, this));
+//        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                Toast.makeText(getBaseContext(), Integer.toString(i+1), Toast.LENGTH_LONG).show();
+//                view.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+//            }
+//        });
+
+
 
         Sensey.getInstance().init(this);
         Sensey.getInstance().startShakeDetection(shakeListener);
