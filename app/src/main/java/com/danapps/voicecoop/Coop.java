@@ -6,7 +6,7 @@ public class Coop {
 
     private boolean isCompleted;
 
-    public Coop(int id, boolean isCompleted) {
+    public Coop(int id) {
         this.id = id;
         isCompleted = false;
     }
@@ -23,7 +23,11 @@ public class Coop {
         return isCompleted;
     }
 
-    public void setCompleted(boolean completed) {
-        isCompleted = completed;
+    public void toggleComplete() {
+        isCompleted = !isCompleted;
+    }
+
+    public void setCompleted(){
+        isCompleted = true;
     }
 }

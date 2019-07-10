@@ -15,13 +15,15 @@ public class numberAdapter extends BaseAdapter {
 
     private int[] numbers;
     private Context context;
+    private ArrayList<Coop> coops;
 
-    numberAdapter(int qty, Context context){
+    numberAdapter(int qty, Context context, ArrayList<Coop> coops){
         this.context = context;
         numbers = new int[qty];
         for(int i = 1; i <= qty; i++){
             numbers[i-1] = i;
         }
+        this.coops = coops;
     }
 
     @Override
@@ -51,13 +53,8 @@ public class numberAdapter extends BaseAdapter {
             txtview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(txtview.getCurrentTextColor() == Color.RED){
-                        txtview.setPaintFlags(txtview.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
-                        txtview.setTextColor(Color.BLACK);
-                    } else {
-                    txtview.setTextColor(Color.RED);
-                    txtview.setPaintFlags(txtview.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                    }
+                    Behaviours.toggleNumber(txtview);
+                    coops.get(Integer.parseInt(txtview.getText().toString())-1).toggleComplete();
                 }
             });
         }

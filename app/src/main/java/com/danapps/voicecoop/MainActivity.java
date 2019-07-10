@@ -15,6 +15,8 @@ import com.github.nisrulz.sensey.Sensey;
 import com.github.nisrulz.sensey.ShakeDetector;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView voiceOutput;
     private GridView gridview;
     private int COOP_QUANTITY = 24;
+    private ArrayList<Coop> coops;
+
     ShakeDetector.ShakeListener shakeListener = new ShakeDetector.ShakeListener() {
         @Override public void onShakeDetected() {
             //shake started, do something
@@ -39,20 +43,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        coops = new ArrayList<>();
+        for(int i = 1; i <= COOP_QUANTITY; i++){
+            coops.add(new Coop(i));
+        }
         voiceOutput = findViewById(R.id.voiceOutput);
 
         gridview = findViewById(R.id.grid_view);
-        gridview.setAdapter(new numberAdapter(COOP_QUANTITY, this));
-//        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                Toast.makeText(getBaseContext(), Integer.toString(i+1), Toast.LENGTH_LONG).show();
-//                view.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-//            }
-//        });
-
-
+        gridview.setAdapter(new numberAdapter(COOP_QUANTITY, this, coops));
 
         Sensey.getInstance().init(this);
         Sensey.getInstance().startShakeDetection(shakeListener);
@@ -86,6 +84,10 @@ public class MainActivity extends AppCompatActivity {
                     }
                     catch (Exception e){
                         parsedInt = 9999999;
+                    }
+                    if(parsedInt < 99999){
+                        coops.get(parsedInt-1).setCompleted();
+                        Behaviours.makeNumberRed((TextView) gridview.getChildAt(parsedInt-1));
                     }
                     voiceOutput.setText(Integer.toString(parsedInt));
                     Sensey.getInstance().startShakeDetection(shakeListener);
