@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,7 +20,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     private TextView voiceOutput;
-
+    private GridView gridview;
+    private int COOP_QUANTITY = 24;
     ShakeDetector.ShakeListener shakeListener = new ShakeDetector.ShakeListener() {
         @Override public void onShakeDetected() {
             //shake started, do something
@@ -38,6 +40,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         voiceOutput = findViewById(R.id.voiceOutput);
+
+        gridview = findViewById(R.id.grid_view);
+        gridview.setAdapter(new numberAdapter(COOP_QUANTITY, this));
+
         Sensey.getInstance().init(this);
         Sensey.getInstance().startShakeDetection(shakeListener);
     }
