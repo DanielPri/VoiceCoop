@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,8 +14,6 @@ import com.github.nisrulz.sensey.Sensey;
 import com.github.nisrulz.sensey.ShakeDetector;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
@@ -83,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                         parsedInt = Integer.parseInt(result.get(0));
                     }
                     catch (Exception e){
-                        parsedInt = 9999999;
+                        parsedInt = potentialSolutions(result.get(0));
                     }
                     if(parsedInt < 99999){
                         coops.get(parsedInt-1).setCompleted();
@@ -93,6 +90,33 @@ public class MainActivity extends AppCompatActivity {
                     Sensey.getInstance().startShakeDetection(shakeListener);
                 }
                 break;
+        }
+    }
+
+    private int potentialSolutions(String input) {
+        switch (input){
+            case "to":
+                return 2;
+            case "too":
+                return 2;
+            case "free":
+                return 3;
+            case "for":
+                return 4;
+            case "a":
+                return 8;
+            case "hey":
+                return 8;
+            case "find":
+                return 9;
+            case "turn":
+                return 10;
+            case "tough":
+                return 12;
+            case "12th":
+                return 12;
+            default:
+                return 99999;
         }
     }
 
