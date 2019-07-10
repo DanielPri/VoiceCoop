@@ -79,8 +79,15 @@ public class MainActivity extends AppCompatActivity {
         switch (requestCode){
             case 10:
                 if(resultCode == RESULT_OK && data != null){
+                    int parsedInt;
                     ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    voiceOutput.setText(result.get(0));
+                    try{
+                        parsedInt = Integer.parseInt(result.get(0));
+                    }
+                    catch (Exception e){
+                        parsedInt = 9999999;
+                    }
+                    voiceOutput.setText(Integer.toString(parsedInt));
                     Sensey.getInstance().startShakeDetection(shakeListener);
                 }
                 break;
